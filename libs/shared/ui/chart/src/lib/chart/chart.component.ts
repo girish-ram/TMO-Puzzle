@@ -1,6 +1,4 @@
 import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   Input,
   OnInit,
@@ -23,7 +21,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   public chart: IChartInfo;
   private destroy$ = new Subject();
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor() {}
 
   ngOnInit() {
     this.chart = CHART_INFO_CONSTANT;

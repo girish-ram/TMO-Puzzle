@@ -1,12 +1,18 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { RouterTestingModule } from '@angular/router/testing';
+import { APP_BASE_HREF } from '../../../../node_modules/@angular/common';
+import { AppModule } from './app.module';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [AppComponent]
+      imports: [ AppModule ],
+      providers: [
+        {
+          provide: APP_BASE_HREF,
+          useValue: '/'
+        }
+      ]
     }).compileComponents();
   }));
 
@@ -18,9 +24,8 @@ describe('AppComponent', () => {
 
   it(`should have as title 'stocks'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
-    const compiled = fixture.debugElement.nativeElement;
     const app = fixture.debugElement.componentInstance;
-    expect(compiled.querySelector('title').textContent).toContain('stocks');
+    expect(app.title).toEqual('stocks');
   });
 
   it('should render title in a h1 tag', () => {
