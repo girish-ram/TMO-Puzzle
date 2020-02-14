@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ChartComponent } from './chart.component';
+import { ChangeDetectorRef } from '../../../../../../../node_modules/@angular/core';
+import { GoogleChartsModule } from 'angular-google-charts';
+import { SharedUiChartModule } from '../shared-ui-chart.module'
+
 
 describe('ChartComponent', () => {
   let component: ChartComponent;
@@ -8,15 +11,15 @@ describe('ChartComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChartComponent ]
+      imports: [SharedUiChartModule, GoogleChartsModule.forRoot()],      
+      providers: [ChangeDetectorRef]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ChartComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = fixture.debugElement.componentInstance;
   });
 
   it('should create', () => {

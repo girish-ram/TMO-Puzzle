@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StocksComponent } from './stocks.component';
+import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
+import { StoreModule } from '@ngrx/store';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { StocksFeatureShellModule } from '@coding-challenge/stocks/feature-shell';
+
 
 describe('StocksComponent', () => {
   let component: StocksComponent;
@@ -8,7 +12,8 @@ describe('StocksComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StocksComponent ]
+      imports: [StoreModule.forRoot({}), StocksFeatureShellModule, NoopAnimationsModule],
+      providers: [PriceQueryFacade]
     })
     .compileComponents();
   }));
