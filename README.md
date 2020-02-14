@@ -1,8 +1,8 @@
-# Coding Challenge : Task 4
+# Coding Challenge : Task 3
 
-### Task 4
+### Task 3
 
-1. Hapi server is used for Api call.
-2. Caching of response is achieved using Catbox-memory.
-3. Used Axios for making external Api call.
-
+1. Ensured the business required is made with proper validation of datepicker.
+2. Subscriptions clean up done.
+3. Added data filtering logic in ngrx reducer.
+3. Added testcases.
