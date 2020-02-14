@@ -3,30 +3,38 @@
  * This is only a minimal backend to get started.
  **/
 import { Server } from 'hapi';
+import { getChartData } from './chart-data';
+
+const CatBoxMemory = require('@hapi/catbox-memory');
 
 const init = async () => {
   const server = new Server({
     port: 3333,
-    host: 'localhost'
+    host: 'localhost',
+    cache: [
+      {
+        name: 'stock_cache',
+        provider: {
+          constructor: CatBoxMemory
+        }
+      }
+    ]
+  });
+
+  server.method('getStock', getChartData, {
+    cache: {
+      cache: 'stock_cache',
+      expiresIn: 200000,
+      generateTimeout: 20000
+    }
   });
 
   server.route({
     method: 'GET',
-    path: '/',
-    handler: (request, h) => {
-      return {
-        hello: 'world'
-      };
+    path: '/api/getStock/{symbol}/{period}',
+    handler: async (request, h) => {
+      const { symbol, period } = request.params;
+      return await server.methods.getStock(symbol, period);
     }
   });
-
-  await server.start();
-  console.log('Server running on %s', server.info.uri);
-};
-
-process.on('unhandledRejection', err => {
-  console.log(err);
-  process.exit(1);
-});
-
-init();
+}
