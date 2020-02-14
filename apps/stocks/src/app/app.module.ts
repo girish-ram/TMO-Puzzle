@@ -11,6 +11,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NxModule } from '@nrwl/nx';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
+import { FormsModule, ReactiveFormsModule } from '../../../../node_modules/@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -37,7 +38,10 @@ import { environment } from '../environments/environment';
         persist: true
       }
     }),
-    StocksDataAccessPriceQueryModule
+    StocksDataAccessPriceQueryModule,
+    FormsModule,
+    ReactiveFormsModule
+
   ],
   providers: [{ provide: StocksAppConfigToken, useValue: environment }],
   bootstrap: [AppComponent]
