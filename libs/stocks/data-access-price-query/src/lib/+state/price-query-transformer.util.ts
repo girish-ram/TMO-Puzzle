@@ -25,3 +25,12 @@ export function transformPriceQueryResponse(
       } as PriceQuery)
   );
 }
+
+export function filterDataWithDateRange(
+  response: PriceQuery[], fromDate: string, toDate: string
+): PriceQuery[] {
+  return response.filter((item: PriceQuery) => 
+     item.dateNumeric >= parse(fromDate).getTime() && item.dateNumeric <= parse(toDate).getTime()
+  );
+}
+

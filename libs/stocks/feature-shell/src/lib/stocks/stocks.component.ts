@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-query';
 
@@ -7,37 +7,32 @@ import { PriceQueryFacade } from '@coding-challenge/stocks/data-access-price-que
   templateUrl: './stocks.component.html',
   styleUrls: ['./stocks.component.css']
 })
-export class StocksComponent implements OnInit {
+export class StocksComponent {
   stockPickerForm: FormGroup;
   symbol: string;
-  period: string;
+  fromDate: string;
+  toDate: string;
+  todayDate = new Date()
 
   quotes$ = this.priceQuery.priceQueries$;
-
-  timePeriods = [
-    { viewValue: 'All available data', value: 'max' },
-    { viewValue: 'Five years', value: '5y' },
-    { viewValue: 'Two years', value: '2y' },
-    { viewValue: 'One year', value: '1y' },
-    { viewValue: 'Year-to-date', value: 'ytd' },
-    { viewValue: 'Six months', value: '6m' },
-    { viewValue: 'Three months', value: '3m' },
-    { viewValue: 'One month', value: '1m' }
-  ];
 
   constructor(private fb: FormBuilder, private priceQuery: PriceQueryFacade) {
     this.stockPickerForm = fb.group({
       symbol: [null, Validators.required],
-      period: [null, Validators.required]
+      fromDate: [null, Validators.required],
+      toDate: [null, Validators.required]
     });
   }
 
-  ngOnInit() {}
-
   fetchQuote() {
     if (this.stockPickerForm.valid) {
-      const { symbol, period } = this.stockPickerForm.value;
-      this.priceQuery.fetchQuote(symbol, period);
+      const { symbol, fromDate, toDate } = this.stockPickerForm.value;
+      this.priceQuery.fetchQuote(symbol, fromDate, toDate);
     }
+  }
+
+  public maxDate(): Date {
+    return (this.stockPickerForm.value.toDate && this.stockPickerForm.value.toDate < this.todayDate) ? this.stockPickerForm.value.toDate
+    : this.todayDate;
   }
 }
